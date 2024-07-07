@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" data-th-href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+<title>formulario de materias</title>
+</head>
+
+<body class="bg-secondary">
+ <nav>
+			<div data-th-replace="~{fragments/header::navbar}"></div>
+		</nav>
+	<div class="container"  align="center">
+	<br>
+	<br>
+		<h1>Formulario Materias</h1>
+		<form data-th-object="${nuevaMateria}" data-th-action="${band}?@{/modificarMateria}:@{/guardarMateria}" method="post">
+			  <div class="col-md-6">
+			    <label for="cod" class="form-label">Codigo</label>
+			    <input type="text" class="form-control" id="cod" data-th-field="*{codigo}" data-th-readonly=${band} required>
+			  </div>
+			  <div class="col-md-6">
+			    <label for="nommateria" class="form-label">Nombre de la Materia</label>
+			    <input type="text" class="form-control" id="nommateria" data-th-field="*{nombre}" required>
+			  </div>
+			  <div class="col-md-6">
+			    <label for="curso" class="form-label">Curso</label>
+			    <input type="text" class="form-control" id="curso" data-th-field="*{curso}">
+			  </div>
+			  <div class="col-md-4">
+			    <label for="cantHoras" class="form-label">Cantidad de años</label>
+			    <input type="number" class="form-control" id="cantHoras" data-th-field="*{cantHoras}">
+			  </div>
+			  <div class="col-md-4">
+    <label for="modalidad" class="form-label">Modalidad</label>
+	<div>
+			<label for="modalidadP">Presencial</label>
+			<input id="modalidadP" type="radio" value="Presencial" data-th-field="*{modalidad}"></input>	
+			<label for="modalidadV">Virtual</label>
+			<input id="modalidadV" type="radio" value="Virtual" data-th-field="*{modalidad}"></input>	
+		<br>
+	</div> 
+  </div>
+			  
+			  
+			  
+			  <br>
+			  <button type="submit" class="btn btn-primary">Guardar materia</button>
+			  
+			</form>
+		</div>
+	
+
+<script data-th-src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
