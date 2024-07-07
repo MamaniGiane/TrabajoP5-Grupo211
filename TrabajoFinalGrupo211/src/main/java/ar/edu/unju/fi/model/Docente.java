@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -34,14 +34,13 @@ import lombok.Data;
 			private String apellido;
 			@Email (message="Ingrese un correo valido")
 		    private String email;
+		    @Size(min=10, max=10,message="Ingrese un telefono valido (10 caracteres)")
 		    private String telefono;
+
+		    @Column(name = "estado", nullable = false)
 		    private boolean estado;
 		    
 		    
-		    //relacion 
-		    @OneToOne 
-		    @JoinColumn(name="codigo")
-		    private Materia materia; 
 		   
 		    
 	}
