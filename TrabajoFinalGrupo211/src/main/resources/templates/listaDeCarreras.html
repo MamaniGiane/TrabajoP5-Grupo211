@@ -9,31 +9,41 @@
 <title>Listado Carreras</title>
 </head>
 <body>
+	<div data-th-replace="~{fragments/header::navbar}"></div>
+	<br>
 	<div class="container">
-	<table class="table table-striped">
-	  <thead>
-	    <tr>
-	      <th scope="col">Codigo</th>
-	      <th scope="col">Nombre</th>
-	      <th scope="col">Cantidad</th>
-	      <th scope="col">Estado</th>
-	      <th scope="col">Edición</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr data-th-each="carrera : ${listadoCarreras}">
-	      <td data-th-text="${carrera.codigo}"></td>
-	      <td data-th-text="${carrera.nombre}"></td>
-	      <td data-th-text="${carrera.cantidadAnios}"></td>
-	      <td data-th-text="${carrera.estado}"></td>
-	      	<td>
-				<a data-th-href="@{'/borrarCarrera/'+${carrera.codigo}}" class="btn btn-danger">Borrar</a>					
-				<a data-th-href="@{'/modificarCarrera/'+${carrera.codigo}}" class="btn btn-warning" >Modificar</a>
-			</td>
-	    </tr>
-	   </tbody>
-	</table>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Codigo</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Cantidad Horas</th>
+					<th scope="col">Estado</th>
+					<th scope="col">Edicion</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-th-each="carrera : ${listadoCarreras}">
+					<td data-th-text="${carrera.codigo}"></td>
+					<td data-th-text="${carrera.nombre}"></td>
+					<td data-th-text="${carrera.cantidadAnios}"></td>
+					<td data-th-text="${carrera.estado}"></td>
+					<td><a data-th-href="@{'/borrarCarrera/'+${carrera.codigo}}"
+						class="btn btn-danger">Borrar</a> <a
+						data-th-href="@{'/modificarCarrera/'+${carrera.codigo}}"
+						class="btn btn-warning">Modificar</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-<script	data-th-src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+	<div class="alert alert-danger" role="alert" data-th-if="${errors}">
+		<p data-th-text="${cargaCarreraErrorMessage}"></p>
+	</div>
+	<br>
+	<br>
+	
+	
+	<script
+		data-th-src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
