@@ -1,73 +1,80 @@
 package ar.edu.unju.fi.service.imp;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unju.fi.dto.DocenteDTO;
+import ar.edu.unju.fi.DTO.DocenteDTO;
 import ar.edu.unju.fi.map.DocenteMapDTO;
 import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.repository.DocenteRepository;
 import ar.edu.unju.fi.service.DocenteService;
-@Service
+import lombok.extern.slf4j.Slf4j;
+
+@Service("docenteServiceImp")
+@Slf4j
 public class DocenteServiceImp implements DocenteService {
 
-	
-	 private static final Logger logger = LoggerFactory.getLogger(DocenteServiceImp.class);
+    @Autowired
+    DocenteMapDTO docenteMapDTO;
 
-	    @Autowired
-	    DocenteRepository docenteRepository; 
+    @Autowired
+    DocenteRepository docenteRepository;
 
-	    @Autowired
-	    DocenteMapDTO docenteMapDTO;
+    @Override
+    public List<DocenteDTO> MostrarDocente() {
+        log.info("Mostrando listado de docentes activos");
+        List<DocenteDTO> docenteDTOs = docenteMapDTO.toDocenteDTOList(docenteRepository.findDocenteByEstado(true));
+        return docenteDTOs;
+    }
 
-	    @Override
-	    public void guardarDocente(Docente docente) {
-	        logger.info("Guardando docente: {}", docente.getLegajo());
-	        docente.setEstado(true);
-	        docenteRepository.save(docente);
-	    }
+    @Override
+    public DocenteDTO findByLegajo(String legajo) {
+        Optional<Docente> docenteOpt = docenteRepository.findByLegajo(legajo);
 
-	    @Override
-	    public List<DocenteDTO> mostrarDocentes() {
-	        logger.info("Mostrando todos los docentes activos.");
-	        return docenteMapDTO.convertirListaDocentesAListaDocentesDTO(docenteRepository.findDocenteByEstado(true)); 
-	    }
+        if (docenteOpt.isPresent()) {
+            log.info("Docente encontrado por legajo: {}", legajo);
+            return docenteOpt.map(docenteMapDTO::toDocenteDTO).orElse(null);
+        } else {
+            log.warn("Docente no encontrado por legajo: {}", legajo);
+            return null;
+        }
+    }
 
-	    @Override
-	    public void borrarDocente(String lu) {
-	        logger.info("Borrando docente con legajo: {}", lu);
-	        List<Docente> docentes = docenteRepository.findAll();
-	        docentes.forEach(docente -> {
-	            if(docente.getLegajo().equals(lu)) {
-	                docente.setEstado(false);
-	                docenteRepository.save(docente);
-	                logger.info("Docente borrado correctamente: {}", lu);
-	            }
-	        });
-	    }
+    @Override
+    public boolean save(DocenteDTO docenteDTO) {
+        Docente docente = docenteMapDTO.toDocente(docenteDTO);
+        docenteRepository.save(docente);
+        log.info("Docente guardado correctamente: {}", docenteDTO.getLegajo());
+        return true;
+    }
 
-	    @Override
-	    public void modificarDocente(Docente docenteDTOModificado) {
-	        logger.info("Modificando docente: {}", docenteDTOModificado.getLegajo());
-	        docenteRepository.save(docenteDTOModificado);
-	    }
+    @Override
+    public void deleteByLegajo(String legajo) {
+        List<Docente> todosLosDocentes = docenteRepository.findAll();
+        for (int i = 0; i < todosLosDocentes.size(); i++) {
+            Docente docente = todosLosDocentes.get(i);
+            if (docente.getLegajo().equals(legajo)) {
+                docente.setEstado(false);
+                docenteRepository.save(docente);
+                log.info("Docente eliminado lógicamente por legajo: {}", legajo);
+                break;
+            }
+        }
+    }
 
-	    @Override
-	    public Docente buscarDocente(String lu) {
-	        logger.info("Buscando docente con legajo: {}", lu);
-	        List<Docente> todosLosDocentes = docenteRepository.findAll();
-	        for (Docente docente : todosLosDocentes) {
-	            if(docente.getLegajo().equals(lu)) {
-	                logger.info("Docente encontrado: {}", lu);
-	                return docente;
-	            }
-	        }
-	        logger.info("Docente no encontrado: {}", lu);
-	        return null;
-	    }
+    
+    @Override
+    public void edit(DocenteDTO docenteDTO) {
+        Docente docente = docenteMapDTO.toDocente(docenteDTO);
+        docenteRepository.save(docente);
+        log.info("Docente editado correctamente: {}", docenteDTO.getLegajo());
+    }
 
+    @Override
+    public Docente buscaDocente(String legajo) {
+        return docenteRepository.findById(legajo).orElse(null);
+    }
 }
