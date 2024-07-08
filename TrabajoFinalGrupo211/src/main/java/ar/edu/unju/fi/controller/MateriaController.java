@@ -45,7 +45,7 @@ public class MateriaController {
             // Manejo de cualquier excepción que ocurra al obtener la lista de materias
             model.addAttribute("error", "Ocurrió un error al obtener la lista de materias.");
         }
-        return "listadoDeMateria";
+        return "ListadoDeMateria";
     }
 
     // Muestra el formulario para agregar una nueva materia

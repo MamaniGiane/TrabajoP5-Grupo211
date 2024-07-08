@@ -35,7 +35,7 @@ public class DocenteController {
             // Manejo de cualquier excepción que ocurra al obtener la lista de docentes
             model.addAttribute("error", "Ocurrió un error al obtener la lista de docentes.");
         }
-        return "listadoDeDocente";
+        return "ListadoDeDocente";
     }
 
     // Muestra el formulario para agregar un nuevo docente
