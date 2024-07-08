@@ -37,7 +37,7 @@ public class Carrera {
 	 @Digits(integer = 1, fraction = 0, message = "Ingrese un valor numérico válido")
 	 @Min(value = 1, message = "La cantidad de años debe ser como mínimo 1")
 	 @Max(value = 6, message = "La cantidad de años debe ser como máximo 6")
-	private Integer duracion;
+	private Integer cantidadAnios;
 	private Boolean estado;
 	
 	
