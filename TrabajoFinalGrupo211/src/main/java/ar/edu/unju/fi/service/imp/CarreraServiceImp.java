@@ -73,5 +73,18 @@ public class CarreraServiceImp implements CarreraService{
 		log.info("INFO: Modificando carrera con codigo {}", carrera.getCodigo());
 		carreraRepository.save(carrera);
 	}
+	
+	@Override
+	public Object getAllCarreras() {
+		// Obtener todas las carreras
+				return carreraRepository.findAll();
+		
+	}
+
+	@Override
+	public Carrera getCarreraByCodigo(Object carreraCodigo) {
+		// Obtener una carrera por su código
+		return carreraRepository.findById((String) carreraCodigo).orElse(null);
+	}
 
 }

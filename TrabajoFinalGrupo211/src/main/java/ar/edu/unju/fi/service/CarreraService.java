@@ -15,4 +15,6 @@ public interface CarreraService {
 	public void borrarCarrera (String codigo);
 	public void modificarCarrera (Carrera carrera);
 	public Carrera buscarCarrera(String codigo);
+	public Object getAllCarreras();
+	public Carrera getCarreraByCodigo(Object carreraCodigo);
 }

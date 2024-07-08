@@ -84,7 +84,7 @@ public class AlumnoServiceImp implements AlumnoService {
     @Override
     public void inscribirAlumno(Alumno alumno, Materia materia) {
         // Agregar la materia al alumno y viceversa
-        alumno.getMateria().add(materia);
+        alumno.getMaterias().add(materia);
         materia.getAlumnos().add(alumno);
         // Guardar los cambios en los repositorios
         alumnoRepository.save(alumno);

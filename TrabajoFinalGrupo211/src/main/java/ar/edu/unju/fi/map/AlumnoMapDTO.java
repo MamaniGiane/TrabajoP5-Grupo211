@@ -2,7 +2,6 @@ package ar.edu.unju.fi.map;
 
 import java.util.List;
 
-import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -23,6 +22,11 @@ public interface AlumnoMapDTO {
 	@Mapping(source="carrera", target="carrera")
 		AlumnoDTO convertirAlumnoAAlumnoDTO(Alumno a);
 	//@Mapping(target ="materias", ignore = true)
+	@Mapping(target = "dni", ignore = true)
+	@Mapping(target = "domicilio", ignore = true)
+	@Mapping(target = "fec_nac", ignore = true)
+	@Mapping(target = "materias", ignore = true)
+	@Mapping(target = "telefono", ignore = true)
 	@InheritInverseConfiguration
 	Alumno convertirAlumnoDTOAAlumno (AlumnoDTO adto);
 	
