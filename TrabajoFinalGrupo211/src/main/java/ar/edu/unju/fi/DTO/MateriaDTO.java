@@ -15,7 +15,7 @@ public class MateriaDTO {
 	private Integer codigo;
 	private String nombre;
 	private String curso;
-	private int cantHoras;
+	private String cantHoras;
 	private String modalidad;
 	private Boolean estado;
 }

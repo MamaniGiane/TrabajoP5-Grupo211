@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"  data-th-href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+
+<title>Listado de Materias</title>
+</head>
+<body class=" bg-secondary">
+
+<div class="container">
+	<br>
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+	      <th scope="col">Codigo</th>
+	      <th scope="col">Nombre</th>
+	      <th scope="col">Curso</th>
+	      <th scope="col">Cantidad de Horas</th>
+	      <th scope="col">Modalidad</th>
+	      <th scope="col">Estado</th>
+	      <th scope="col">Edición</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr data-th-each="materia: ${listadoMaterias}">
+	      <td data-th-text="${materia.codigo}"></td>
+	      <td data-th-text="${materia.nombre}"></td>
+	      <td data-th-text="${materia.curso}"></td>
+	      <td data-th-text="${materia.cantidadHoras}"></td>
+	      <td data-th-text="${materia.modalidad}"></td>
+	      <td data-th-text="${materia.docente}"></td>
+	      	<td>
+				<a data-th-href="@{'/borrarMateria/'+${materia.codigo}}" class="btn btn-danger">Borrar</a>					
+				<a data-th-href="@{'/modificarMateria/'+${materia.codigo}}" class="btn btn-warning" >Modificar</a>
+			</td>
+	    </tr>
+	   </tbody>
+	</table>
+	</div>
+<div class="text-center">
+<h5>Ingresa otra materia:</h5>	
+<a href="/formularioMateria">Formulario Materia</a>
+<h5>Vuelve al inicio:</h5>	
+<a href="/principal/index">Pagina principal</a>
+</div>
+<br><br>
+<script	data-th-src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
