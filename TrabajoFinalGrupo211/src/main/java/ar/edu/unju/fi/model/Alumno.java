@@ -57,6 +57,7 @@ public class Alumno {
     @Size(min = 5, max = 10, message = "El LU debe contener entre 5 y 10 caracteres")
     @Pattern(regexp = "[0-9]+", message = "El LU debe contener solo números")
     private String lu;
+    private Boolean estado;
 
     @ManyToMany(mappedBy = "alumnos")
 	private List<Materia> materia;
@@ -65,4 +66,5 @@ public class Alumno {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "carrera_id")
 	private Carrera carrera;
+
 }
