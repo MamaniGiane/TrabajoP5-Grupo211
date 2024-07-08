@@ -28,5 +28,4 @@ public interface DocenteMapDTO {
 	
 	List<Docente> ToDocenteList (List<DocenteDTO> listaDDTO);
 	
-	
 }

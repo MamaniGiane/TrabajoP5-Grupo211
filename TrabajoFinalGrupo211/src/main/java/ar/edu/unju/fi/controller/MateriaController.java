@@ -33,43 +33,41 @@ public class MateriaController {
     
     @Autowired
     MateriaDTO nuevaMateriaDTO;
-    // Muestra la lista de materias
+  
     @GetMapping("/listado")
     public String getMateria(Model model) {
         try {
         	List<MateriaDTO> materias = materiaService.MostrarMateria();
-        	System.out.println("Materias en el modelo: " + materias); // Verifica si se están añadiendo al modelo
+        	System.out.println("Materias en el modelo: " + materias); 
             model.addAttribute("materia", materiaService.MostrarMateria());
            
         } catch (Exception e) {
-            // Manejo de cualquier excepción que ocurra al obtener la lista de materias
+           
             model.addAttribute("error", "Ocurrió un error al obtener la lista de materias.");
         }
         return "ListadoDeMateria";
     }
 
-    // Muestra el formulario para agregar una nueva materia
+
     @GetMapping("/nuevo")
     public String getVistaNuevaCarrera(Model model) {
-        boolean edicion = false; // No quiero editar un objeto
+        boolean edicion = false; 
         model.addAttribute("nuevaMateria", nuevaMateriaDTO);
         model.addAttribute("edicion", edicion);
-        //-----------------CAMBIOS PARA MOSTRAR EN LA VISTA------------------
-     // Añadir la lista de docentes al modelo
+    
         List<DocenteDTO> docentes = docenteService.MostrarDocente();
         model.addAttribute("docentes", docentes);
         
         return "formMateria";
     }
 
-    // Guarda una nueva materia
+  
     @PostMapping("/guardar")
     public String guardarMateria(@Valid @ModelAttribute("nuevaMateria") MateriaDTO materiaDTO,BindingResult resultado, Model model) {
     	if (resultado.hasErrors()) {
     		model.addAttribute("nuevaMateria", materiaDTO);
             model.addAttribute("edicion", false);
-            //-----------------CAMBIOS PARA MOSTRAR EN LA VISTA------------------
-            // Añadir la lista de docentes al modelo
+         
                List<DocenteDTO> docentes = docenteService.MostrarDocente();
                model.addAttribute("docentes", docentes);
             return "formMateria"; 
@@ -78,7 +76,7 @@ public class MateriaController {
 			 try { 
             materiaService.save(materiaDTO);
 	        } catch (Exception e) {
-	            // Manejo de cualquier excepción que ocurra al guardar la materia
+	          
 	        	model.addAttribute("Error Al cargar el docente", e.getMessage());
 	            return "redirect:/materia/nuevo?error=true";
 	        }
@@ -87,7 +85,7 @@ public class MateriaController {
         
     }
 
-    // Muestra el formulario para modificar una materia existente
+ 
     @GetMapping("/modificarMateria/{codigo}")
     public String getModificarMateriaPague(Model model, @PathVariable(value = "codigo") String codigo) {
         try {
@@ -95,18 +93,17 @@ public class MateriaController {
             boolean edicion = true;
             model.addAttribute("nuevaMateria", materiaEncontradoDTO);
             model.addAttribute("edicion", edicion);
-            //-----------------CAMBIOS PARA MOSTRAR EN LA VISTA------------------
-            // Añadir la lista de docentes al modelo
+          
                List<DocenteDTO> docentes = docenteService.MostrarDocente();
                model.addAttribute("docentes", docentes);
         } catch (Exception e) {
-            // Manejo de cualquier excepción que ocurra al encontrar la materia por código
+          
             return "redirect:/materia/listado?error=true";
         }
         return "formMateria";
     }
 
-    // Guarda las modificaciones de una materia existente
+
     @PostMapping("/modificar")
     public String modificarMateria(@Valid @ModelAttribute("nuevaMateria") MateriaDTO materiaDTO,BindingResult resultado, Model model) {
     	if (resultado.hasErrors()) {
@@ -117,7 +114,7 @@ public class MateriaController {
 			 try {
             materiaService.edit(materiaDTO);
 	        } catch (Exception e) {
-	            // Manejo de cualquier excepción que ocurra al modificar la materia
+	    
 	            return "redirect:/materia/modificar/" + materiaDTO.getCodigo() + "?error=true";
 	        }
 	        return "redirect:/materia/listado";
@@ -125,13 +122,13 @@ public class MateriaController {
        
     }
 
-    // Elimina una materia por su código
+
     @GetMapping("/borrarMateria/{codigo}")
     public String eliminarMateria(@PathVariable(value = "codigo") String codigo) {
         try {
             materiaService.deleteByCodigo(codigo);
         } catch (Exception e) {
-            // Manejo de cualquier excepción que ocurra al borrar la materia
+   
             return "redirect:/materia/listado?error=true";
         }
         return "redirect:/materia/listado";

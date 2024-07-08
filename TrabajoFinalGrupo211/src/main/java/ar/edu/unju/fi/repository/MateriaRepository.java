@@ -9,4 +9,5 @@ public interface MateriaRepository extends JpaRepository<Materia,String> {
 	
 	List<Materia> findMateriaByEstado(Boolean estado);
 	Optional<Materia> findByCodigo(String codigo);
+	
 }

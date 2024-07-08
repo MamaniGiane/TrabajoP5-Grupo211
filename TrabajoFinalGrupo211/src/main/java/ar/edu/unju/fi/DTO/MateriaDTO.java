@@ -17,7 +17,7 @@ import lombok.Setter;
 public class MateriaDTO {
 	
 		@Size(min=4, message="El nombre debe contener como mínimo 4 caracteres")
-		@Pattern(regexp = "^cod[0-9]+$", message = "El legajo debe iniciar con cod y número de codigo. Ejemplo: cod1,cod2")
+		@Pattern(regexp = "[0-9]+$", message = "El legajo debe tener maximo 9 digitos")
 		private String codigo;
 		
 		@Size(min=3, max=40, message="El nombre debe contener como mínimo 3 caracteres y como máximo 20 caracteres")

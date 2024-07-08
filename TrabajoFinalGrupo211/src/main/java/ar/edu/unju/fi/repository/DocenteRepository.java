@@ -12,5 +12,6 @@ public interface DocenteRepository extends JpaRepository<Docente,String>{
 	
 	List<Docente> findDocenteByEstado(Boolean estado);
 	 Optional<Docente> findByLegajo(String legajo);
+	 
 }
 

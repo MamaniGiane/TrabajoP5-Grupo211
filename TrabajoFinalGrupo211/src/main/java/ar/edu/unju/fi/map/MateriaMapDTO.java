@@ -1,7 +1,6 @@
 package ar.edu.unju.fi.map;
 
 import java.util.List;
-
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,9 +23,11 @@ public interface MateriaMapDTO {
 	
 	@InheritInverseConfiguration
 	Materia toMateria(MateriaDTO mdto); 
+	
 		
 	List<MateriaDTO> toMateriaDTOList (List<Materia> listaM);
 	
 	List<Materia> toMateriaList (List<MateriaDTO> listaMDTO);
+	
 	
 }

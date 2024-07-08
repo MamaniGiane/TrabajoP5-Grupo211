@@ -17,7 +17,7 @@ import lombok.Setter;
 @Component
 
 public class DocenteDTO {
-	@Size(min=3, max=9, message="El nombre debe contener como mínimo 8 caracteres y como máximo 9 caracteres")
+	@Size(min=3, max=8, message="El nombre debe contener como mínimo 8 caracteres y como máximo 9 caracteres")
 	private String legajo;
 	@Size(min=3, max=20, message="El nombre debe contener como mínimo 3 caracteres y como máximo 20 caracteres")
 	@Pattern(regexp= "[a-z A-Z]*", message="Debe ingresar únicamente letras")

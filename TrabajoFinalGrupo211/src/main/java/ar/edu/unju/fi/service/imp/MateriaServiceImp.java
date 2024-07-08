@@ -31,6 +31,7 @@ public class MateriaServiceImp implements MateriaService {
         return materiaDTOs;
     }
 
+    
     @Override
     public MateriaDTO findByCodigo(String codigo) {
         Optional<Materia> materiaOpt = materiaRepository.findByCodigo(codigo);

@@ -26,19 +26,19 @@ public class DocenteController {
     @Autowired
     DocenteDTO nuevoDocenteDTO;
 
-    // Muestra la lista de docentes
+ 
     @GetMapping("/listadoDocente")
     public String getCarreras(Model model) {
         try {
-            model.addAttribute("docente", docenteService.MostrarDocente()); // muestra la lista de docentes
+            model.addAttribute("docente", docenteService.MostrarDocente()); 
         } catch (Exception e) {
-            // Manejo de cualquier excepción que ocurra al obtener la lista de docentes
+         
             model.addAttribute("error", "Ocurrió un error al obtener la lista de docentes.");
         }
         return "ListadoDeDocente";
     }
 
-    // Muestra el formulario para agregar un nuevo docente
+   
     @GetMapping("/nuevo")
     public String getVistaNuevaDocente(Model model) {
         boolean edicion = false; 
@@ -49,7 +49,7 @@ public class DocenteController {
 
     // Guarda un nuevo docente
     @PostMapping("/guardar")
-    //@Valid @ModelAttribute("nuevoDocente") Tiene que devolver el mismo nombre que viene como objeto del formulario.html
+   
     public String guardarDocente(@Valid @ModelAttribute("nuevoDocente") DocenteDTO docenteDTO, BindingResult resultado, Model model) { 
         if (resultado.hasErrors()) {
             model.addAttribute("nuevoDocente", docenteDTO);
@@ -60,7 +60,7 @@ public class DocenteController {
             docenteService.save(docenteDTO);
 	        } catch (Exception e) {
 	            model.addAttribute("error", "Ocurrió un error al guardar el docente.");
-	            return "formDocente"; // Mostrar el formulario con un mensaje de error
+	            return "formDocente"; 
 	        }
 	        return "redirect:/docente/listadoDocente";
 		}
@@ -68,7 +68,7 @@ public class DocenteController {
     }
 
 
-    // Muestra el formulario para modificar un docente existente
+
     @GetMapping("/modificar/{legajo}")
     public String getModificarDocentePage(Model model, @PathVariable(value = "legajo") String legajo) {
         try {
@@ -77,13 +77,13 @@ public class DocenteController {
             model.addAttribute("nuevoDocente", docenteEncontradoDTO);
             model.addAttribute("edicion", edicion);
         } catch (Exception e) {
-            // Manejo de cualquier excepción que ocurra al encontrar el docente por legajo
+     
             return "redirect:/docente/listadoDocente?error=true";
         }
         return "formDocente";
     }
 
-    // Guarda las modificaciones de un docente existente
+
     @PostMapping("/modificar")
     public String modificarDocente(@Valid @ModelAttribute("nuevoDocente") DocenteDTO docenteDTO,BindingResult resultado, Model model) {
     	if (resultado.hasErrors()) {
@@ -94,7 +94,7 @@ public class DocenteController {
 			    try {
 	            docenteService.edit(docenteDTO);
 		        } catch (Exception e) {
-		            // Manejo de cualquier excepción que ocurra al modificar el docente
+		      
 		            return "redirect:/docente/modificar/" + docenteDTO.getLegajo() + "?error=true";
 		        }
 		        return "redirect:/docente/listadoDocente";
@@ -102,13 +102,13 @@ public class DocenteController {
        
     }
 
-    // Elimina un docente por su legajo
+
     @GetMapping("/borrar/{legajo}")
     public String eliminarDocente(@PathVariable(value = "legajo") String legajo) {
         try {
             docenteService.deleteByLegajo(legajo);
         } catch (Exception e) {
-            // Manejo de cualquier excepción que ocurra al borrar el docente
+         
             return "redirect:/docente/listadoDocente?error=true";
         }
         return "redirect:/docente/listadoDocente";
