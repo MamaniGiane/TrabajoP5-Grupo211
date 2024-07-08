@@ -9,6 +9,10 @@
 </head>
 <body class=" bg-secondary">
 
+<nav>
+		<div data-th-replace="~{fragments/header::navbar}"></div>
+	</nav>
+	
 <div class="container">
 	<br>
 	<table class="table table-striped">
@@ -41,7 +45,7 @@
 	</div>
 <div class="text-center">
 <h5>Ingresa otra materia:</h5>	
-<a href="/formularioMateria">Formulario Materia</a>
+<a href="/materia/nuevo">Formulario Materia</a>
 <h5>Vuelve al inicio:</h5>	
 <a href="/principal/index">Pagina principal</a>
 </div>

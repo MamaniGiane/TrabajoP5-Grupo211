@@ -1,69 +1,80 @@
 package ar.edu.unju.fi.service.imp;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.DTO.MateriaDTO;
 import ar.edu.unju.fi.map.MateriaMapDTO;
+import ar.edu.unju.fi.model.Materia;
 import ar.edu.unju.fi.repository.MateriaRepository;
 import ar.edu.unju.fi.service.MateriaService;
+import lombok.extern.slf4j.Slf4j;
 
-@Service
-public class MateriaServiceImp implements MateriaService{
+@Service("materiaServiceImp")
+@Slf4j
+public class MateriaServiceImp implements MateriaService {
 
-	@Autowired
-	MateriaRepository materiaRepository;
-	
-	@Autowired
-	MateriaMapDTO materiaMapDTO;
-	
-	@Override
-	public void guardarMateria(MateriaDTO materiaDTO) {
-		// TODO Auto-generated method stub
-		materiaRepository.save(materiaMapDTO.convertirMateriaDTOAMateria(materiaDTO));
-		
-	}
-	
-	@Override
-	public List<MateriaDTO> mostrarMateria() {
-		// TODO Auto-generated method stub
-		return materiaMapDTO.convertirListaMateriaAListaMateriasDTO(materiaRepository.findMateriaByEstado(true));
-	}
-	
-	@Override
-	public void borrarMateria(Integer codigo) {
-		// TODO Auto-generated method stub
-		System.out.println("este es el codigo: "+codigo);
-		List<MateriaDTO> m = materiaMapDTO.convertirListaMateriaAListaMateriasDTO(materiaRepository.findAll());
-		m.forEach(materia -> {
-			if(materia.getCodigo().equals(codigo)) {
-				materia.setEstado(false);
-				materiaRepository.save(materiaMapDTO.convertirMateriaDTOAMateria(materia));
-			}
-		});
+    @Autowired
+    MateriaMapDTO materiaMapDTO;
 
-	}
-	
-	@Override
-	public void modificarMateria(MateriaDTO materiaDTO) {
-		// TODO Auto-generated method stub
-		materiaRepository.save(materiaMapDTO.convertirMateriaDTOAMateria(materiaDTO));
-	}
-	
-	@Override
-	public MateriaDTO buscarMateria(Integer codigo) {
-		// TODO Auto-generated method stub
-		List<MateriaDTO> m = materiaMapDTO.convertirListaMateriaAListaMateriasDTO(materiaRepository.findAll());
-		for(MateriaDTO materias : m) {
-			if(materias.getCodigo().equals(codigo)) {
-				return materias;
-			}
-		}
-		return null;
-	}
-	
-	
+    @Autowired
+    MateriaRepository materiaRepository;
+
+    @Override
+    public List<MateriaDTO> MostrarMateria() {
+        log.info("Mostrando listado de materias activas");
+        List<MateriaDTO> materiaDTOs = materiaMapDTO.toMateriaDTOList(materiaRepository.findMateriaByEstado(true));
+        log.info("Cantidad de materias recuperadas: {}", materiaDTOs.size());
+        return materiaDTOs;
+    }
+
+    @Override
+    public MateriaDTO findByCodigo(String codigo) {
+        Optional<Materia> materiaOpt = materiaRepository.findByCodigo(codigo);
+
+        if (materiaOpt.isPresent()) {
+            log.info("Materia encontrada por código: {}", codigo);
+            return materiaOpt.map(materiaMapDTO::toMateriaDTO).orElse(null);
+        } else {
+            log.warn("Materia no encontrada por código: {}", codigo);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean save(MateriaDTO materiaDTO) {
+        Materia materia = materiaMapDTO.toMateria(materiaDTO);
+        materiaRepository.save(materia);
+        log.info("Materia guardada correctamente: {}", materiaDTO.getCodigo());
+        return true;
+    }
+
+    @Override
+    public void deleteByCodigo(String codigo) {
+        List<Materia> todasLasMaterias = materiaRepository.findAll();
+        for (int i = 0; i < todasLasMaterias.size(); i++) {
+            Materia materia = todasLasMaterias.get(i);
+            if (materia.getCodigo().equals(codigo)) {
+                materia.setEstado(false);
+                materiaRepository.save(materia);
+                log.info("Materia eliminada lógicamente por código: {}", codigo);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void edit(MateriaDTO materiaDTO) {
+        Materia materia = materiaMapDTO.toMateria(materiaDTO);
+        materiaRepository.save(materia);
+        log.info("Materia editada correctamente: {}", materiaDTO.getCodigo());
+    }
+
+    @Override
+    public Materia buscaMateria(String codigo) {
+        return materiaRepository.findById(codigo).orElse(null);
+    }
 }
