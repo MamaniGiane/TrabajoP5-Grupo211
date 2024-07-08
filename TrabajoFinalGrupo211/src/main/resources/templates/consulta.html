@@ -12,9 +12,9 @@
 </div>
 <div style="background-color:#FF5733;">
 <div class="container">
-	
+	<center>
     <h1 class="mb-4" style="color: #92aad0;">Alumnos por Carrera</h1>
-   
+    </center>
     <form th:action="@{/buscarAlumnosPorCarrera}" method="get">
         <div class="col-6">
             <label for="carrera" class="form-label" style="color: #92aad0;">Carrera</label>
@@ -45,9 +45,7 @@
         </tbody>
     </table>
 </div>
-</div>
-<div data-th-replace="~{fragments/footer::footer}">
-</div>
+
 <script data-th-src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" type="text/javascript"></script>
 </body>
 </html>
