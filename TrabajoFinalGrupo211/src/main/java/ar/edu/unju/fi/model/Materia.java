@@ -27,8 +27,9 @@ public class Materia {
 	@NotBlank(message="Campo obligatorio")
 	@Size(min=8, max=50)
 	private String curso;
+	
 	@Column(name = "cantHoras", nullable = false)
-	@Size(min = 50, max = 170, message = "El Cantidad de horas debe ser entre 50 y 170 horas.")
+	@Size(min = 50, max = 170, message = "La Cantidad de horas debe ser entre 50 y 170 horas.")
 	private String cantHoras;
 	private String modalidad;
 	private Boolean estado;

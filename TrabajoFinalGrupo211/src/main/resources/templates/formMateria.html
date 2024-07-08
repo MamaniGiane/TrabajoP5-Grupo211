@@ -15,22 +15,26 @@
 	<br>
 	<br>
 		<h1>Formulario Materias</h1>
-		<form data-th-object="${nuevaMateria}" data-th-action="${band}?@{/modificarMateria}:@{/guardarMateria}" method="post">
+		<form data-th-object="${nuevaMateria}" data-th-action="${flag}?@{/modificarMateria}:@{/guardarMateria}" method="post">
 			  <div class="col-md-6">
 			    <label for="cod" class="form-label">Codigo</label>
 			    <input type="text" class="form-control" id="cod" data-th-field="*{codigo}" data-th-readonly=${band} required>
+			    <p class="form-text text-danger" data-th-if="${#fields.hasErrors('codigo')}" data-th-errors="*{codigo}"></p>
 			  </div>
 			  <div class="col-md-6">
 			    <label for="nommateria" class="form-label">Nombre de la Materia</label>
 			    <input type="text" class="form-control" id="nommateria" data-th-field="*{nombre}" required>
+			    <p class="form-text text-danger" data-th-if="${#fields.hasErrors('nombre')}" data-th-errors="*{nombre}"></p>
 			  </div>
 			  <div class="col-md-6">
 			    <label for="curso" class="form-label">Curso</label>
-			    <input type="text" class="form-control" id="curso" data-th-field="*{curso}">
+			    <input type="text" class="form-control" id="curso" data-th-field="*{curso}" required>
 			  </div>
+			  <p class="form-text text-danger" data-th-if="${#fields.hasErrors('curso')}" data-th-errors="*{curso}"></p>
 			  <div class="col-md-4">
 			    <label for="cantHoras" class="form-label">Cantidad de horas</label>
-			    <input type="number" class="form-control" id="cantHoras" data-th-field="*{cantHoras}">
+			    <input type="number" class="form-control" id="cantHoras" data-th-field="*{cantHoras}" required>
+			    <p class="form-text text-danger" data-th-if="${#fields.hasErrors('cantHoras')}" data-th-errors="*{cantHoras}"></p>
 			  </div>
 			  <div class="col-md-4">
     <label for="modalidad" class="form-label">Modalidad</label>
@@ -49,6 +53,9 @@
 			  <button type="submit" class="btn btn-primary">Guardar materia</button>
 			  
 			</form>
+			<div class="alert alert-danger" role="alert" data-th-if="${errors}">
+			<p data-th-text="${cargaAMateriaErrorMessage}"></p>
+		</div>
 		</div>
 	
 

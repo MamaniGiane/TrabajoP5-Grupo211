@@ -35,15 +35,22 @@ public class materiaController {
 	}
 	
 	@PostMapping("/guardarMateria")
-	public ModelAndView saveMateria(@ModelAttribute("nuevaMateria") MateriaDTO materiaparaGuardar) {
-		
-		//guardar
-		materiaService.guardarMateria(materiaparaGuardar);
-		
-		//mostrar listado
-		ModelAndView modelView = new ModelAndView("listadoDeMaterias");
-		
+	public ModelAndView saveMateria(@Valid @ModelAttribute("nuevaMateria") MateriaDTO materiaparaGuardar, BindingResult result) {
+		ModelAndView modelView = new ModelAndView("listadoDeMateria");
+		try {
+			if(result.hasErrors()){
+				modelView.setViewName("formMateria");
+				modelView.addObject("flag", false);
+			}else {
+			materiaService.guardarMateria(materiaparaGuardar);
+		}
+		}catch(Exception e) {
+			modelView.addObject("errors", true);
+			modelView.addObject("cargaMateriaErrorMessage", "Error al cargar en la BD" + e.getMessage());
+			System.out.println(e.getMessage());
+		}
 		modelView.addObject("listadoMateria", materiaService.mostrarMateria());
+		
 		return modelView;
 	}
 	
@@ -96,5 +103,13 @@ public class materiaController {
 		return modelView;
 	}
 	
+	@GetMapping("/listadoMaterias")
+	public ModelAndView showMaterias() {
+		// mostrar el listado
+		ModelAndView modelView = new ModelAndView("listaDeMaterias");
+		modelView.addObject("listadoMaterias", materiaService.mostrarMateria());
+		return modelView;
+
+	}
 	
 }
